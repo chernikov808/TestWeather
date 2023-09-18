@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     
     let netMannager = WeatherNetworkManager()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

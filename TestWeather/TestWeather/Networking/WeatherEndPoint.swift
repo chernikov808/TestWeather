@@ -8,24 +8,24 @@
 import Foundation
 import Alamofire
 
-
+// создаем endpoint нашего приложения, конечный запрос
 enum WeatherEndPoint {
     case forecast(lat:String, lon:String, extra:Bool)
 
 }
-
+// в расширении указываем сам запрос наследуем протокол Routing собираем базовый url
 extension WeatherEndPoint: Routing {
     var baseUrl: String {
       return API.configure(scheme: .https, domain: Configuration.baseUrl, version: .v2)
     }
-    
+    // указывваем путь
     var path: String {
         switch self{
         case .forecast:
             return "/forecast"
         }
     }
-    
+    // указывыаем необходимые параметры запроса
     var parameters: Parameters {
         switch self{
         case .forecast(let lat, let  lon, let extra):
@@ -36,8 +36,8 @@ extension WeatherEndPoint: Routing {
             ]
         }
     }
-    
+    // в заголовке передаем ключ
     var headers: HTTPHeaders {
-       return ["X-Yandex-API-Key": "f82f0317-4f72-40e9-9b4b-cb4cbd3ad5a2"]
+        return ["X-Yandex-API-Key": Configuration.yandexApiKey]
     }
 }

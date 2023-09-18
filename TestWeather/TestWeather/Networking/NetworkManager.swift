@@ -8,22 +8,18 @@
 import Foundation
 import Alamofire
 
-
+// протокол получает запрошенную модель погоды или возвращает ошибку
 protocol WeatherProtocol {
     typealias WeatherCompletionBlock = (_ weathrModel: WeatherModel?, _ error: AFError?) -> ()
     
     func fetchWeather(lat:String, lon:String, extra:Bool, completion: @escaping WeatherCompletionBlock)
 }
-
+//класс соверешает запрос через alamofire к api погоды и возвращает нам данные или ошибку
 class WeatherNetworkManager: WeatherProtocol {
     
     func fetchWeather(lat: String, lon: String, extra: Bool, completion: @escaping WeatherCompletionBlock) {
-        let endPoint: WeatherEndPoint = .forecast(lat: lat, lon: lon, extra: extra)
         
-        AF.request(endPoint.baseUrl + endPoint.path,
-                   method: endPoint.method,
-                   parameters: endPoint.parameters,
-                   headers: endPoint.headers).responseDecodable(of: WeatherModel.self){ response in
+        NetRouter<WeatherEndPoint, WeatherModel>().request(.forecast(lat: lat, lon: lon, extra: extra)){ response in
             switch response.result{
             case .success(let value):
                 completion(value, nil)
@@ -31,7 +27,7 @@ class WeatherNetworkManager: WeatherProtocol {
                 completion(nil, error)
             }
         }
+        
     }
-    
     
 }
