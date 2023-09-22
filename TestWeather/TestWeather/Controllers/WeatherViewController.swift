@@ -22,7 +22,8 @@ class WeatherViewController:  UIViewController {
         weatherTableView.delegate = self
         weatherTableView.dataSource = self
         
-        weatherTableView.register( DateWeatherTbCell.self, forCellReuseIdentifier: "DateWeatherTbCell")
+        weatherTableView.register(DateWeatherTbCell.self, forCellReuseIdentifier: "DateWeatherTbCell")
+        weatherTableView.register(UpForecastCell.self, forCellReuseIdentifier: "UpForecastCell")
         
         view.addSubview(weatherTableView)
         weatherTableView.snp.makeConstraints { make in
@@ -56,9 +57,9 @@ extension WeatherViewController: UITableViewDataSource {
         
         switch indexPath.section{
         case 0:
-            let cell = UITableViewCell()
-            cell.textLabel?.text = "\(indexPath.row)"
-            return cell
+            let upForecastCell = tableView.dequeueReusableCell(withIdentifier: "UpForecastCell") as? UpForecastCell
+
+            return upForecastCell ?? UITableViewCell()
         case 1:
             let dateCell = tableView.dequeueReusableCell(withIdentifier: "DateWeatherTbCell") as? DateWeatherTbCell
             return dateCell ?? UITableViewCell()
@@ -75,5 +76,5 @@ extension WeatherViewController: UITableViewDataSource {
 }
 
 extension WeatherViewController: UITableViewDelegate {
-    
+
 }
