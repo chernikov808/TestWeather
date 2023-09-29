@@ -58,7 +58,7 @@ extension WeatherViewController: UITableViewDataSource {
         switch indexPath.section{
         case 0:
             let upForecastCell = tableView.dequeueReusableCell(withIdentifier: "UpForecastCell") as? UpForecastCell
-
+            
             return upForecastCell ?? UITableViewCell()
         case 1:
             let dateCell = tableView.dequeueReusableCell(withIdentifier: "DateWeatherTbCell") as? DateWeatherTbCell
@@ -66,9 +66,6 @@ extension WeatherViewController: UITableViewDataSource {
         default:
             return UITableViewCell()
         }
-        
-        
-        
         
     }
     
